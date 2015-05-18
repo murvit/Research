@@ -39,8 +39,7 @@ public class GameFrame extends JFrame {
     boolean stop;
     boolean tankDead;
     boolean begin;
-    boolean delay;
-    int delayCounter;
+
     String sScore;
     String sLevel;
 
@@ -115,62 +114,6 @@ public class GameFrame extends JFrame {
     @Override
     public void paint(Graphics g) {
 
-//        g.drawLine(fieldStartX, fieldStartY - 1, fieldSizeX, fieldStartY - 1);
-//        g.drawLine(fieldStartX, fieldSizeY, fieldSizeX, fieldSizeY);
-//
-//        g.setColor(pureGray);
-//        g.drawRect(tank.getxOld() - 26, tank.getyOld() - 26, tankSizeX + 1, tankSizeY + 1);
-//        picTank = Tank.IMAGES.get(tank.getDirection());
-//        g.drawImage(picTank, tank.getX() - 25, tank.getY() - 25, null);
-//
-//        for (int i = enemies.size() - 1; i > -1; i--) {
-//            Enemy enemy = enemies.get(i);
-//            g.drawImage(clear, enemy.getxOld(), enemy.getyOld(), null);
-//            g.drawImage(monster, enemy.getX(), enemy.getY(), null);
-//        }
-//
-//        g.setColor(pureGray);
-//        for (int i = tank.bullets.size() - 1; i > -1; i--) {
-//            Bullet bullet = tank.bullets.get(i);
-//            g.drawRect(bullet.getxOld(), bullet.getyOld(), 1, 1);
-//        }
-//
-//        g.setColor(Color.RED);
-//        for (int i = tank.bullets.size() - 1; i > -1; i--) {
-//            Bullet bullet = tank.bullets.get(i);
-//            g.drawRect(bullet.getX(), bullet.getY(), 1, 1);
-//        }
-
-
-        if (begin) {
-            initialize();
-            begin = false;
-            g.clearRect(0, 0, fieldSizeX, fieldSizeY + 50);
-            g.setColor(Color.BLACK);
-            g.drawLine(fieldStartX, fieldStartY - 1, fieldSizeX, fieldStartY - 1);
-            g.drawLine(fieldStartX, fieldSizeY, fieldSizeX, fieldSizeY);
-            System.out.println("Start");
-
-
-        } else {
-            if (delay) {
-                g.setColor(Color.RED);
-                Font fontStart = new Font("Serif", Font.BOLD, 24);
-                FontMetrics sizeFontStart = getFontMetrics(fontStart);
-                g.setFont(fontStart);
-                String sStart = Integer.toString(delayCounter);
-                int xStart = fieldSizeX / 2 - sizeFontStart.stringWidth(sStart) / 2;
-                int yStart = fieldSizeY + 50 - sizeFontStart.getHeight() / 2;
-                g.clearRect(0, fieldSizeY + 1, fieldSizeX, 50);
-                if (delayCounter > 0) {
-                    g.drawString(sStart + " !!!", xStart, yStart);
-                    System.out.println(delayCounter);
-
-                } else
-                    g.drawString("GO !!!", xStart, yStart);
-            }
-
-
             g.setColor(Color.RED);
             Font fontHi = new Font("Serif", Font.BOLD, 24);
             FontMetrics sizeFontHi = getFontMetrics(fontHi);
@@ -180,12 +123,13 @@ public class GameFrame extends JFrame {
             int yHiText = (fieldStartY) / 2 + sizeFontHi.getHeight() / 2;
             int xLevel = 15;
             int xScore = fieldSizeX - sizeFontHi.stringWidth(sScore) - 15;
+
             if (score == hiScore)
                 g.clearRect(0, 0, fieldSizeX, fieldStartY - 1);
             g.drawString(sLevel, xLevel, yHiText);
             g.drawString(sScore, xScore, yHiText);
 
-            g.setColor(Color.LIGHT_GRAY);
+            g.setColor(pureGray);
             g.drawRect(tank.getxOld() - 25, tank.getyOld() - 25, tankSizeX, tankSizeY);
             switch (tank.getDirectionX()) {
                 case 1:
@@ -225,13 +169,13 @@ public class GameFrame extends JFrame {
 
             for (int i = tank.bullets.size() - 1; i > -1; i--) {
                 Bullet bullet = tank.bullets.get(i);
-                g.setColor(Color.LIGHT_GRAY);
+                g.setColor(pureGray);
                 g.drawRect(bullet.getxOld(), bullet.getyOld(), 1, 1);
                 if (!bullet.isDead) {
                     g.setColor(Color.red);
                     g.drawRect(bullet.getX(), bullet.getY(), 1, 1);
                 } else {
-                    g.setColor(Color.LIGHT_GRAY);
+                    g.setColor(pureGray);
                     g.drawRect(bullet.getxOld(), bullet.getyOld(), 1, 1);
                     tank.bullets.remove(i);
                 }
@@ -243,18 +187,17 @@ public class GameFrame extends JFrame {
                 Font fontLoose = new Font("Serif", Font.BOLD, 24);
                 FontMetrics sizeFontLoose = getFontMetrics(fontLoose);
                 g.setFont(fontLoose);
-                String sLoose = "Game over! Press Enter to continue or 'X' то exit";
+                String sLoose = "Game over! Press Enter to continue or X to exit";
                 int xLoose = fieldSizeX / 2 - sizeFontLoose.stringWidth(sLoose) / 2;
                 int yLoose = fieldSizeY + 50 - sizeFontLoose.getHeight() / 2;
                 g.clearRect(0, fieldSizeY + 1, fieldSizeX, 50);
                 g.drawString(sLoose, xLoose, yLoose);
                 level = 1;
 
-//            g.clearRect(0, 0, fieldSizeX, fieldStartY);
             }
 
             if (win) {
-                //g.clearRect(0,0,fieldSizeX, fieldSizeY);
+
                 g.setColor(Color.RED);
                 Font fontWin = new Font("Serif", Font.BOLD, 24);
                 FontMetrics sizeFontWin = getFontMetrics(fontWin);
@@ -269,7 +212,7 @@ public class GameFrame extends JFrame {
 
 
         }
-    }
+
 
 // ========================================= Инициализация ========================================
 
@@ -287,8 +230,6 @@ public class GameFrame extends JFrame {
         tankDead = false;
         begin = true;
 
-        delay = true;
-        delayCounter = 3;
 
         makeEnemies(numberOfMonsters);
     }
@@ -316,7 +257,6 @@ public class GameFrame extends JFrame {
     }
 
 
-// ====================================================== MAIN ===============================================
 
 
 }

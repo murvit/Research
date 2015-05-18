@@ -10,7 +10,7 @@ public class GameKeyAdapter extends KeyAdapter{
     @Override
     public void keyPressed(KeyEvent e) {
         int i = (e.getKeyCode());
-//                System.out.println(i);
+
         switch (i) {
             case 37:
                 GameFrame.tank.rotateLeft();

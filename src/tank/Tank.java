@@ -102,7 +102,7 @@ public class Tank {
     public void shoot() {
         Bullet bullet = new Bullet(this);
         bullets.add(bullet);
-        System.out.println(bullets.size());
+
     }
 
 
