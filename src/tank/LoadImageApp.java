@@ -24,7 +24,7 @@ public class LoadImageApp extends Component {
 
 
         } catch (IOException e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 }

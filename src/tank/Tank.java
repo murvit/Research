@@ -104,6 +104,4 @@ public class Tank {
         bullets.add(bullet);
 
     }
-
-
 }
